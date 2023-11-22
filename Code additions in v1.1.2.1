@@ -1,0 +1,45 @@
+Code additions. Working in v1.1.2 which is continuation of v1.1.1
+
+Config file:
+#define ADC_INPUT2 39
+
+Mesure electricity file:
+extern EnergyMonitor emon2;
+extern unsigned short measurements2[];
+
+double amps2 = emon2.calcIrms(1480);
+double watts2 = amps2 * HOME_VOLTAGE;
+measurements2[measureIndex] = watts2;
+
+!!!!Remeber also to trace and change following lines
+gDisplayValues.amps = amps1;
+gDisplayValues.watt = watts1;
+(I beleive this would ensure serial monitor displays messages from both sensors). Firstly trace back for a "placeholder message"
+
+Main.ccp
+EnergyMonitor emon2;
+unsigned short measurements2[LOCAL_MEASUREMENTS];
+emon2.current(ADC_INPUT2, 29);
+
+??? THis part is not covered by GPT
+// Setup the ADC
+  adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_11);
+  analogReadResolution(ADC_BITS);
+  pinMode(ADC_INPUT1, INPUT);
+
+
+mqtt-aws.h
+extern unsigned short measurements2[];
+char msg2[AWS_MAX_MSG_SIZE_BYTES];
+strcpy(msg2, "{\"readings2\":[");
+
+        for (short i = 0; i < LOCAL_MEASUREMENTS-1; i++){
+            strcat(msg2, String(measurements2[i]).c_str());
+            strcat(msg2, ",");
+        }
+
+
+Result: 
++ code compiled and build successfuly
++ serial monitor displays readings from sensor 2 successfully
++ MQTT message contains only readings ( for this stage this is ok). last lines of MQTT file needs to be adjusted.
