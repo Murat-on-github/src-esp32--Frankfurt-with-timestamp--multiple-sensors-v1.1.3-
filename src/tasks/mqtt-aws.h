@@ -108,7 +108,7 @@
         strcat(msg, String(sum).c_str()); //added
         strcat(msg, ",\"average\":"); //added
         strcat(msg, String(average).c_str()); //added
-        strcat(msg, "\"}");
+        strcat(msg, "\"");
         //MKcodefinish
 
         strcat(msg2, String(measurements2[LOCAL_MEASUREMENTS-1]).c_str());
