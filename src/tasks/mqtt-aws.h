@@ -80,7 +80,7 @@
             sum += measurements1[i];
          }
         //MK Code finish
-    double average = (double)sum / LOCAL_MEASUREMENTS; // This will compute the average
+    float average = (double)sum / LOCAL_MEASUREMENTS; // This will compute the average
 
         char msg[AWS_MAX_MSG_SIZE_BYTES];
         char msg2[AWS_MAX_MSG_SIZE_BYTES];
@@ -104,11 +104,11 @@
         strcat(msg, gDisplayValues.beginning_timestamp.c_str());
         strcat(msg, "\",\"end_time\":\"");
         strcat(msg, gDisplayValues.ending_timestamp.c_str());
-         strcat(msg, "\",\"sum\":"); //added
+        strcat(msg, ",\"sum\":"); //added
         strcat(msg, String(sum).c_str()); //added
         strcat(msg, ",\"average\":"); //added
         strcat(msg, String(average).c_str()); //added
-        strcat(msg, "\"");
+        strcat(msg, "}");
         //MKcodefinish
 
         strcat(msg2, String(measurements2[LOCAL_MEASUREMENTS-1]).c_str());
