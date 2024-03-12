@@ -12,7 +12,7 @@
     extern DisplayValues gDisplayValues; //MKcode Added this line to access gDisplayValues struct
 
 
-    #define AWS_MAX_MSG_SIZE_BYTES 300
+    #define AWS_MAX_MSG_SIZE_BYTES 1000
 
     WiFiClientSecure AWS_net;
     MQTTClient AWS_mqtt = MQTTClient(AWS_MAX_MSG_SIZE_BYTES);
@@ -86,7 +86,7 @@
         char msg2[AWS_MAX_MSG_SIZE_BYTES];
         
         strcpy(msg, "{\"readings\":[");
-        strcpy(msg2, "{\"readings2\":[");
+        strcpy(msg, "{\"readings2\":[");
 
         for (short i = 0; i < LOCAL_MEASUREMENTS-1; i++){
             strcat(msg, String(measurements1[i]).c_str());
@@ -94,8 +94,8 @@
         }
 
         for (short i = 0; i < LOCAL_MEASUREMENTS-1; i++){
-            strcat(msg2, String(measurements2[i]).c_str());
-            strcat(msg2, ",");
+            strcat(msg, String(measurements2[i]).c_str());
+            strcat(msg, ",");
         }
 
         strcat(msg, String(measurements1[LOCAL_MEASUREMENTS-1]).c_str());
@@ -111,11 +111,11 @@
         strcat(msg, "}");
         //MKcodefinish
 
-        strcat(msg2, String(measurements2[LOCAL_MEASUREMENTS-1]).c_str());
+        strcat(msg, String(measurements2[LOCAL_MEASUREMENTS-1]).c_str());
             
         serial_print("[MQTT] AWS publish: ");
         serial_println(msg);
-        serial_println(msg2);
+        //serial_println(msg2);
         AWS_mqtt.publish(AWS_IOT_TOPIC, msg);
 
         // Task is done!
