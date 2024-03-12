@@ -68,7 +68,7 @@
  * Local measurements
  */
 #define LOCAL_MEASUREMENTS 30 //MK:Was 30 (this is kind of zero readings)
-
+#define LOCAL_MEASUREMENTS2 30 
 
 /**
  * The MQTT endpoint of the service we should connect to and receive messages

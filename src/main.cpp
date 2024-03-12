@@ -23,7 +23,7 @@ EnergyMonitor emon2;
 
 // Place to store local measurements before sending them off to AWS
 unsigned short measurements1[LOCAL_MEASUREMENTS];
-unsigned short measurements2[LOCAL_MEASUREMENTS];
+unsigned short measurements2[LOCAL_MEASUREMENTS2];
 unsigned char measureIndex = 0;
 
 void setup()

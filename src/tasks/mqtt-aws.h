@@ -83,22 +83,22 @@
     float average = (double)sum / LOCAL_MEASUREMENTS; // This will compute the average
 
         char msg[AWS_MAX_MSG_SIZE_BYTES];
-        char msg2[AWS_MAX_MSG_SIZE_BYTES];
+       // char msg2[AWS_MAX_MSG_SIZE_BYTES];
         
         strcpy(msg, "{\"readings\":[");
-        strcpy(msg, "{\"readings2\":[");
-
         for (short i = 0; i < LOCAL_MEASUREMENTS-1; i++){
             strcat(msg, String(measurements1[i]).c_str());
             strcat(msg, ",");
         }
-
-        for (short i = 0; i < LOCAL_MEASUREMENTS-1; i++){
+        strcat(msg, String(measurements1[LOCAL_MEASUREMENTS-1]).c_str());
+        
+        strcat(msg, "],\"readings2\":[");
+        for (short i = 0; i < LOCAL_MEASUREMENTS2-1; i++){
             strcat(msg, String(measurements2[i]).c_str());
             strcat(msg, ",");
         }
-
-        strcat(msg, String(measurements1[LOCAL_MEASUREMENTS-1]).c_str());
+        strcat(msg, String(measurements2[LOCAL_MEASUREMENTS2-1]).c_str());
+        
         strcat(msg, "],\"start_time\":\""); //MKcode: modified slightly contents of the string
         //MKcodestart
         strcat(msg, gDisplayValues.beginning_timestamp.c_str());
@@ -111,7 +111,7 @@
         strcat(msg, "}");
         //MKcodefinish
 
-        strcat(msg, String(measurements2[LOCAL_MEASUREMENTS-1]).c_str());
+        
             
         serial_print("[MQTT] AWS publish: ");
         serial_println(msg);
