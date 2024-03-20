@@ -20,6 +20,7 @@ struct DisplayValues {
   int8_t wifi_strength;
   DEVICE_STATE currentState;
   String time;
+  String time2;
   String beginning_timestamp;  // MKcode :New variable for the beginning timestamp
   String ending_timestamp;    // MKCode: New variable for the ending timestamp
 };

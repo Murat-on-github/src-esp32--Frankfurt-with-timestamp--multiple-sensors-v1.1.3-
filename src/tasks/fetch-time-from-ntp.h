@@ -6,7 +6,6 @@
     #include <WiFi.h>
     #include <NTPClient.h>
     #include <WiFiUdp.h>
-    #include <NTPClient.h>
     #include "../config/enums.h"
     #include <time.h>
 
@@ -58,6 +57,10 @@
             serial_println("[NTP] AWS Redshift Timestamp: " + awsRedshiftTimestamp);
 
             serial_println("[NTP] Done");
+            serial_println(gDisplayValues.time);
+            serial_println(gDisplayValues.time2);
+
+
 
             // Sleep for a minute before checking again
             vTaskDelay(NTP_UPDATE_INTERVAL_MS / portTICK_PERIOD_MS);
