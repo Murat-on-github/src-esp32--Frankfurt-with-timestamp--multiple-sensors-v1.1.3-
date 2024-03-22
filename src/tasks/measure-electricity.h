@@ -20,26 +20,24 @@ void measureElectricity(void * parameter)
 {
     for(;;){
       serial_println("[ENERGY] Measuring...");
-      long start = millis();//what does this line do??
-
-      //read from first sensor
-      double amps1 = emon1.calcIrms(1480);
-      double watts1 = amps1 * HOME_VOLTAGE;
-
-      //read from second sensor
-      double amps2 = emon2.calcIrms(1480);
-      double watts2 = amps2 * HOME_VOLTAGE;
-
-      gDisplayValues.amps = amps1;
-      gDisplayValues.watt = watts1;
+      long start = millis();//what does this line do?? - it triggeres a timer start to monitor how long the loop of measuring take time.
 // MKcodeadditionstart: If this is the first measurement in the set, record the timestamp
       if(measureIndex == 0){
           gDisplayValues.beginning_timestamp = timeClient.getFormattedDate(); // Updating the beginning timestamp
       }
 // MKcodeadditionfinish
-
+      //read from first sensor
+      double amps1 = emon1.calcIrms(1480);
+      double watts1 = amps1 * HOME_VOLTAGE;
+      gDisplayValues.amps = amps1;
+      gDisplayValues.watt = watts1;
       measurements1[measureIndex] = watts1;
+
+      //read from second sensor
+      double amps2 = emon2.calcIrms(1480);
+      double watts2 = amps2 * HOME_VOLTAGE;
       measurements2[measureIndex] = watts2;
+      
       measureIndex++;
 
       if(measureIndex == LOCAL_MEASUREMENTS){
