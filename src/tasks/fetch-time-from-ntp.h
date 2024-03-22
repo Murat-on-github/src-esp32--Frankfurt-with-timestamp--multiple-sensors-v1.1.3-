@@ -43,7 +43,7 @@
             
             // Sleep for a minute before checking again
             vTaskDelay(NTP_UPDATE_INTERVAL_MS / portTICK_PERIOD_MS);
-            //conclusion: this code now produces timestamp but this timestamo is not used in MQTT message yet. It is only printed in the serial monitor. 
+            //conclusion2: this code now produces timestamp but this timestamo is not used in MQTT message yet. It is only printed in the serial monitor. 
         }
     }
 #endif
