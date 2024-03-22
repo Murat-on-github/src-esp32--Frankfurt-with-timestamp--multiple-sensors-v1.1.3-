@@ -104,7 +104,7 @@
         strcat(msg, gDisplayValues.beginning_timestamp.c_str());
         strcat(msg, "\",\"end_time\":\"");
         strcat(msg, gDisplayValues.ending_timestamp.c_str());
-        strcat(msg, ",\"sum\":"); //added
+        strcat(msg, "\",\"sum\":"); //added
         strcat(msg, String(sum).c_str()); //added
         strcat(msg, ",\"average\":"); //added
         strcat(msg, String(average).c_str()); //added
