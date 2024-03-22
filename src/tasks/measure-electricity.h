@@ -20,13 +20,13 @@ void measureElectricity(void * parameter)
 {
     for(;;){
       serial_println("[ENERGY] Measuring...");
-      long start = millis();
+      long start = millis();//what does this line do??
 
       //read from first sensor
       double amps1 = emon1.calcIrms(1480);
       double watts1 = amps1 * HOME_VOLTAGE;
 
-      //read from first sensor
+      //read from second sensor
       double amps2 = emon2.calcIrms(1480);
       double watts2 = amps2 * HOME_VOLTAGE;
 
@@ -34,7 +34,7 @@ void measureElectricity(void * parameter)
       gDisplayValues.watt = watts1;
 // MKcodeadditionstart: If this is the first measurement in the set, record the timestamp
       if(measureIndex == 0){
-          gDisplayValues.beginning_timestamp = timeClient.getFormattedTime(); // Updating the beginning timestamp
+          gDisplayValues.beginning_timestamp = timeClient.getFormattedDate(); // Updating the beginning timestamp
       }
 // MKcodeadditionfinish
 
@@ -44,7 +44,7 @@ void measureElectricity(void * parameter)
 
       if(measureIndex == LOCAL_MEASUREMENTS){
           // MKcodeadditionstart: 
-          gDisplayValues.ending_timestamp = timeClient.getFormattedTime(); // Updating the ending timestamp
+          gDisplayValues.ending_timestamp = timeClient.getFormattedDate(); // Updating the ending timestamp
           // MKcodeadditionfinish
           #if AWS_ENABLED == true
             xTaskCreate(
