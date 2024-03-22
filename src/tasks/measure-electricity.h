@@ -19,6 +19,17 @@ extern unsigned char measureIndex; //? what does this part do
 void measureElectricity(void * parameter)
 {
     for(;;){
+      // Check if time is synchronized (year is not 1970)
+        String currentTime = timeClient.getFormattedDate();
+        int year = currentTime.substring(0, 4).toInt(); // Extract the year part of the date string
+
+        // Wait until the year is not 1970
+        while(year == 1970) {
+            serial_println("[ENERGY] Waiting for time synchronization...");
+            vTaskDelay(5000 / portTICK_PERIOD_MS); // Check again in 5 seconds
+            currentTime = timeClient.getFormattedDate();
+            year = currentTime.substring(0, 4).toInt();
+        }
       serial_println("[ENERGY] Measuring...");
       long start = millis();//what does this line do?? - it triggeres a timer start to monitor how long the loop of measuring take time.
 // MKcodeadditionstart: If this is the first measurement in the set, record the timestamp
