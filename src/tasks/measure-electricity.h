@@ -18,6 +18,8 @@ extern unsigned char measureIndex; //? what does this part do
 
 void measureElectricity(void * parameter) {
     bool timeSynced = false;
+    long CycleStart = 0; // Define CycleStart here to ensure it's accessible throughout the function
+    long CycleEnd =0;
     for(;;) {
         // Only attempt to synchronize time and wait for the next full minute once
         if (!timeSynced) {
@@ -44,11 +46,13 @@ void measureElectricity(void * parameter) {
         }
 
         serial_println("[ENERGY] Measuring...");
-        long start = millis(); // Start timing the measurement process
+        long start = millis(); // Start timing the measurement process- this is for each individual measurement (one out of 30 every 30 second)
 
+        
         // If this is the first measurement in the set, record the timestamp
         if(measureIndex == 0){
-            gDisplayValues.beginning_timestamp = timeClient.getFormattedDate();
+          CycleStart = millis(); // Start timer for cycle measurement 
+          gDisplayValues.beginning_timestamp = timeClient.getFormattedDate();
         }
 
         // Read from first sensor
@@ -67,7 +71,12 @@ void measureElectricity(void * parameter) {
 
         if(measureIndex == LOCAL_MEASUREMENTS){
             gDisplayValues.ending_timestamp = timeClient.getFormattedDate(); // Record the ending timestamp
-
+            CycleEnd = millis();//End timer for cycle measurement
+          //Calculating time taked for execution of the measurement look 
+            long duration= CycleEnd- CycleStart;
+            serial_println("[ENERGY] Measurement loop took ");
+            serial_println(duration);
+            serial_println(" ms.");
             // Handle AWS upload
             #if AWS_ENABLED == true
             xTaskCreate(
@@ -96,6 +105,8 @@ void measureElectricity(void * parameter) {
         }
 
         long end = millis(); // End timing the measurement process
+
+        
 
         // Schedule the task to run again in 1 second, accounting for measurement duration
         vTaskDelay((1000 - (end - start)) / portTICK_PERIOD_MS);
