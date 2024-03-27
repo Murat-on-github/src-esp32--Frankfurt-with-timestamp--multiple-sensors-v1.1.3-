@@ -10,7 +10,7 @@
     extern unsigned short measurements1[];
     extern unsigned short measurements2[];
     extern DisplayValues gDisplayValues; //MKcode Added this line to access gDisplayValues struct
-
+    extern long duration;
 
     #define AWS_MAX_MSG_SIZE_BYTES 1000
 
@@ -108,6 +108,8 @@
         strcat(msg, String(sum).c_str()); //added
         strcat(msg, ",\"average\":"); //added
         strcat(msg, String(average).c_str()); //added
+        strcat(msg, ",\"duration\":");
+        strcat(msg, String(duration).c_str());
         strcat(msg, "}");
         //MKcodefinish
 
