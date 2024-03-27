@@ -15,6 +15,9 @@ extern EnergyMonitor emon2;
 extern unsigned short measurements1[];
 extern unsigned short measurements2[];
 extern unsigned char measureIndex; //? what does this part do
+extern long duration; //declaring variable for "duration" so that it is accessible form other files
+long duration = 0; // Definition and initialization
+
 
 void measureElectricity(void * parameter) {
     bool timeSynced = false;
@@ -73,7 +76,7 @@ void measureElectricity(void * parameter) {
             gDisplayValues.ending_timestamp = timeClient.getFormattedDate(); // Record the ending timestamp
             CycleEnd = millis();//End timer for cycle measurement
           //Calculating time taked for execution of the measurement look 
-            long duration= CycleEnd- CycleStart;
+            duration= CycleEnd- CycleStart;
             serial_println("[ENERGY] Measurement loop took ");
             serial_println(duration);
             serial_println(" ms.");
